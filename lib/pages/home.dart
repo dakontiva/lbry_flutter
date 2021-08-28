@@ -18,8 +18,8 @@ class _HomeState extends State<Home> {
     setState(() {
       loading = true;
     });
-    // var url = Uri.parse('http://10.0.2.2:5279');
-    var url = Uri.parse('http://127.0.0.1:5279');
+    var url = Uri.parse('http://10.0.2.2:5279');
+    // var url = Uri.parse('http://127.0.0.1:5279');
     var response = await http.post(url,
         body: json.encode({
           "method": "claim_search",
@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
           }
         }));
     currentPage += 1;
-    print(json.decode(response.body)["result"]["items"].runtimeType);
+    // print(json.decode(response.body)["result"]["items"].runtimeType);
     claimList.addAll(json.decode(response.body)["result"]["items"]);
     setState(() {
       loading = false;
@@ -77,16 +77,6 @@ class _HomeState extends State<Home> {
                     // itemExtent: 310,
                     itemCount: claimList.length,
                     itemBuilder: (context, index) {
-                      // return Card(
-                      //   color: Colors.orangeAccent,
-                      //   child: ListTile(
-                      //     onTap: () {},
-                      //     title: Text(claimList[index]["value"]["title"] + "\n" + claimList[index]["value"]["thumbnail"]["url"]),
-                      //   ),
-                      // );
-                      // print(claimList[index]["value"]["title"]);
-                      // print();
-
                       return ClaimTile(claimProps: {
                         "title": claimList[index]["value"]["title"],
                         "thumbnail_url": claimList[index]["value"]["thumbnail"]["url"],
