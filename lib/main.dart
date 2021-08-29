@@ -1,6 +1,9 @@
+// import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:lbry/pages/home.dart';
 import 'package:lbry/pages/loading.dart';
+import 'package:lbry/pages/show_claim.dart';
 
 
 void main() {
@@ -10,6 +13,7 @@ void main() {
     routes: {
       '/': (context) => Home(),
       '/loading': (context) => Loading(),
+      '/show_claim': (context) => ShowClaim(),
     },
   )
   );

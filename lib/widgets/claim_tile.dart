@@ -16,39 +16,38 @@ class ClaimTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 200,
-            width: 400,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-              child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: claimProps["thumbnail_url"],
-                imageErrorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                  return Container(
-                    color: Colors.black,
-                    child: Center(
-                      child: Text(
-                        'No Image',
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.white60,
+          InkWell(
+            onTap: (){
+              Navigator.pushNamed(context, '/show_claim', arguments: {"permanent_url": claimProps["permanent_url"]});
+            },
+            child: Container(
+              height: 200,
+              width: 400,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: claimProps["thumbnail_url"],
+                  imageErrorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                    return Container(
+                      color: Colors.black,
+                      child: Center(
+                        child: Text(
+                          'No Image',
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.white60,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-                fit: BoxFit.cover,
+                    );
+                  },
+                  fit: BoxFit.cover,
+                ),
               ),
-              // Image.network(
-              //   //TODO: handle error when fetching thumbnails
-              //   //TODO: Use FadeInImage to show loading progress
-              //   claimProps["thumbnail_url"],
-              //   fit: BoxFit.cover,
-              // ),
             ),
           ),
           Container(

@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
     });
     var url = Uri.parse('http://10.0.2.2:5279');
     // var url = Uri.parse('http://127.0.0.1:5279');
-    var response = await http.post(url,
+    http.Response response = await http.post(url,
         body: json.encode({
           "method": "claim_search",
           "params": {
@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
             "page": currentPage,
             "page_size": 20,
             "no_totals": true,
-            "remomve_duplicates": true,
+            "remove_duplicates": true,
           }
         }));
     currentPage += 1;
@@ -79,8 +79,13 @@ class _HomeState extends State<Home> {
                     itemBuilder: (context, index) {
                       return ClaimTile(claimProps: {
                         "title": claimList[index]["value"]["title"],
-                        "thumbnail_url": claimList[index]["value"]["thumbnail"]["url"],
-                        "channel_name": (claimList[index]["signing_channel"] == null) ? "Anonymous" : claimList[index]["signing_channel"]["name"],
+                        "thumbnail_url": claimList[index]["value"]["thumbnail"]
+                            ["url"],
+                        "channel_name":
+                            (claimList[index]["signing_channel"] == null)
+                                ? "Anonymous"
+                                : claimList[index]["signing_channel"]["name"],
+                        "permanent_url": claimList[index]["permanent_url"]
                       });
                     }),
                 if (loading) ...[
