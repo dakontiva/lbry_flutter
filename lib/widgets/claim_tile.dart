@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lbry/widgets/ink_wrapper.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ClaimTile extends StatelessWidget {
@@ -6,7 +7,7 @@ class ClaimTile extends StatelessWidget {
 
   const ClaimTile({
     Key? key,
-    this.claimProps = const {},
+    required this.claimProps,
   }) : super(key: key);
 
   @override
@@ -16,18 +17,18 @@ class ClaimTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InkWell(
-            onTap: (){
-              Navigator.pushNamed(context, '/show_claim', arguments: {"permanent_url": claimProps["permanent_url"]});
-            },
-            child: Container(
-              height: 200,
-              width: 400,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
+          Container(
+            height: 200,
+            width: 400,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              child: InkWrapper(
+                onTap: (){
+                  Navigator.pushNamed(context, '/show_claim', arguments: {"permanent_url": claimProps["permanent_url"]});
+                },
                 child: FadeInImage.memoryNetwork(
                   placeholder: kTransparentImage,
                   image: claimProps["thumbnail_url"],
