@@ -31,6 +31,7 @@ dependencies:
   transparent_image: ^2.0.0
   video_player: ^2.1.14
   chewie: ^1.2.2
+  better_player: ^0.0.73
 
 dev_dependencies:
   flutter_test:
