@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+// import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -35,12 +35,12 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SpinKitFadingCube(
-          color: Colors.green,
-          size: 50.0,
-        ),
-      ),
+      // body: Center(
+      //   child: SpinKitFadingCube(
+      //     color: Colors.green,
+      //     size: 50.0,
+      //   ),
+      // ),
     );
   }
 }

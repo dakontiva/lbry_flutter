@@ -21,6 +21,7 @@ class _LbryVideoPlayerState extends State<LbryVideoPlayer> {
       aspectRatio: 16 / 9,
       fit: BoxFit.contain,
       autoPlay: true,
+      autoDetectFullscreenDeviceOrientation: true,
     );
     _betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,

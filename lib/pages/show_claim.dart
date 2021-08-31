@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:lbry/widgets/lbry_video_player.dart';
+import 'package:lbry/services/lbry_sdk/main.dart' as lbry_sdk_main;
 
 class ShowClaim extends StatefulWidget {
   const ShowClaim({Key? key}) : super(key: key);
@@ -14,20 +11,6 @@ class ShowClaim extends StatefulWidget {
 
 class _ShowClaimState extends State<ShowClaim> {
   late final Future<String> streamingUrl;
-
-  Future<String> fetchStreamingUrl(String permanentUrl) async {
-    Uri url = Uri.parse("http://10.0.2.2:5279");
-    // Uri url = Uri.parse("http://127.0.0.1:5279");
-    http.Response response = await http.post(url,
-        body: json.encode({
-          "method": "get",
-          "params": {
-            "uri": permanentUrl,
-          }
-        }));
-    print(json.decode(response.body)["result"]["streaming_url"]);
-    return json.decode(response.body)["result"]["streaming_url"];
-  }
 
   @override
   void initState() {
@@ -41,7 +24,7 @@ class _ShowClaimState extends State<ShowClaim> {
         .of(context)!
         .settings
         .arguments as Map;
-    streamingUrl = fetchStreamingUrl(claimProps["permanent_url"]);
+    streamingUrl = lbry_sdk_main.get(claimProps["permanent_url"]);
   }
 
   @override

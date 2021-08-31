@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lbry/services/lbry_sdk/claim.dart' as lbry_sdk_claim;
 import 'package:lbry/widgets/claim_tile.dart';
 
 class Home extends StatefulWidget {
@@ -18,23 +19,10 @@ class _HomeState extends State<Home> {
     setState(() {
       loading = true;
     });
-    var url = Uri.parse('http://10.0.2.2:5279');
-    // var url = Uri.parse('http://127.0.0.1:5279');
-    http.Response response = await http.post(url,
-        body: json.encode({
-          "method": "claim_search",
-          "params": {
-            "order_by": "effective_amount",
-            "claim_type": "stream",
-            "page": currentPage,
-            "page_size": 20,
-            "no_totals": true,
-            "remove_duplicates": true,
-          }
-        }));
+    List _claims = await lbry_sdk_claim.claimSearch(pageNumber: currentPage);
     currentPage += 1;
     // print(json.decode(response.body)["result"]["items"].runtimeType);
-    claimList.addAll(json.decode(response.body)["result"]["items"]);
+    claimList.addAll(_claims);
     setState(() {
       loading = false;
     });
