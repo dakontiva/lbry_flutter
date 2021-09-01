@@ -65,6 +65,8 @@ class _HomeState extends State<Home> {
                     // itemExtent: 310,
                     itemCount: claimList.length,
                     itemBuilder: (context, index) {
+                      // print(
+                      //     "${claimList[index]["signing_channel"]["value"]["thumbnail"]} ${claimList[index]["signing_channel"]["value"]["title"]}");
                       return ClaimTile(claimProps: {
                         "title": claimList[index]["value"]["title"],
                         "thumbnail_url": claimList[index]["value"]["thumbnail"]
@@ -73,7 +75,11 @@ class _HomeState extends State<Home> {
                             (claimList[index]["signing_channel"] == null)
                                 ? "Anonymous"
                                 : claimList[index]["signing_channel"]["name"],
-                        "permanent_url": claimList[index]["permanent_url"]
+                        "permanent_url": claimList[index]["permanent_url"],
+                        "channel_thumbnail_url": claimList[index]
+                            ["signing_channel"]["value"]["thumbnail"]["url"],
+                        "channel_title": claimList[index]["signing_channel"]
+                            ["value"]["title"],
                       });
                     }),
                 if (loading) ...[

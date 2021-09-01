@@ -26,13 +26,16 @@ class ClaimTile extends StatelessWidget {
                 topRight: Radius.circular(10),
               ),
               child: InkWrapper(
-                onTap: (){
-                  Navigator.pushNamed(context, '/show_claim', arguments: {"permanent_url": claimProps["permanent_url"]});
+                onTap: () {
+                  Navigator.pushNamed(context, '/show_claim', arguments: {
+                    "permanent_url": claimProps["permanent_url"]
+                  });
                 },
                 child: FadeInImage.memoryNetwork(
                   placeholder: kTransparentImage,
                   image: claimProps["thumbnail_url"],
-                  imageErrorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                  imageErrorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrace) {
                     return Container(
                       color: Colors.black,
                       child: Center(
@@ -51,29 +54,82 @@ class ClaimTile extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 5, bottom: 5),
-            child: Text(
-              claimProps["title"],
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 18,
+          InkWrapper(
+            onTap: () {
+              Navigator.pushNamed(context, '/show_claim',
+                  arguments: {"permanent_url": claimProps["permanent_url"]});
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 5, bottom: 5),
+              child: Text(
+                claimProps["title"],
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 5),
-            child: Text(
-              claimProps["channel_name"],
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
-              overflow: TextOverflow.fade,
-              maxLines: 1,
+          InkWrapper(
+            onTap: () {},
+            child: Row(
+              children: <Widget>[
+                FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  width: 40,
+                  height: 40,
+                  image: claimProps["channel_thumbnail_url"],
+                  imageErrorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrace) {
+                    return Container(
+                      width: 40,
+                      height: 40,
+                      color: Colors.black12,
+                      child: Icon(
+                        Icons.person,
+                        size: 30.0,
+                      ),
+                    );
+                  },
+                  fit: BoxFit.cover,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (claimProps["channel_title"] != null)
+                        Container(
+                          margin: EdgeInsets.only(bottom: 5),
+                          child: Text(
+                            claimProps["channel_title"],
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                          ),
+                        ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          claimProps["channel_name"],
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.fade,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           )
         ],
