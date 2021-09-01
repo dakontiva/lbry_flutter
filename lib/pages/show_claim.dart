@@ -40,7 +40,7 @@ class _ShowClaimState extends State<ShowClaim> {
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               Widget child;
               if(snapshot.hasData){
-                child = LbryVideoPlayer(streamingUrl: '${snapshot.data?.replaceFirst("localhost", "10.0.2.2")}');
+                child = LbryVideoPlayer(streamingUrl: '${snapshot.data}');
               }
               else if (snapshot.hasError){
                 child = Text('${snapshot.error}');
