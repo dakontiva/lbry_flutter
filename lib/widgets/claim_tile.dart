@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lbry/utils/date_time.dart';
 import 'package:lbry/widgets/ink_wrapper.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -9,6 +10,15 @@ class ClaimTile extends StatelessWidget {
     Key? key,
     required this.claimProps,
   }) : super(key: key);
+
+  String findReleaseTime() {
+    if (claimProps["release_time"] != null)
+      return timeAgo(int.parse(claimProps["release_time"]));
+    else if (claimProps["timestamp"] != null)
+      return timeAgo(int.parse(claimProps["timestamp"]));
+    else
+      return "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,38 +103,63 @@ class ClaimTile extends StatelessWidget {
                       ),
                     );
                   },
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(left: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      if (claimProps["channel_title"] != null)
+                      if (claimProps["channel_title"] != "")
                         Container(
-                          margin: EdgeInsets.only(bottom: 5),
+                          padding: EdgeInsets.only(bottom: 3.0),
+                          width: 300,
                           child: Text(
                             claimProps["channel_title"],
+                            // "this is a really really really really really really really really really really really long title",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 15,
                             ),
-                            overflow: TextOverflow.fade,
+                            overflow: TextOverflow.clip,
                             maxLines: 1,
                           ),
                         ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          claimProps["channel_name"],
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5.0),
+                            child: Text(
+                              claimProps["channel_name"],
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.fade,
+                              maxLines: 1,
+                            ),
                           ),
-                          overflow: TextOverflow.fade,
-                          maxLines: 1,
-                        ),
+                          Icon(
+                            Icons.circle,
+                            size: 3.0,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              findReleaseTime(),
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 12,
+                                // fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.fade,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
