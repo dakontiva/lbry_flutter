@@ -6,8 +6,12 @@ The `lbry_lite` branch uses [odysee's](https://odysee.com) API backend instead o
 should make the client lightweight
 
 ### Screenshots
+<p float="left">
 <img src="screenshots/Screenshot_1630745868.png" alt="drawing" width="200"/>
 <img src="screenshots/Screenshot_1630745948.png" alt="drawing" width="200"/>
 <img src="screenshots/Screenshot_1630745969.png" alt="drawing" width="200"/>
+</p>
+<p float="left">
 <img src="screenshots/Screenshot_1630745987.png" alt="drawing" width="200"/>
-<img src="screenshots/Screenshot_1630746001.png" alt="drawing" width="200"/>\
+<img src="screenshots/Screenshot_1630746001.png" alt="drawing" width="200"/>
+</p>
