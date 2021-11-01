@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lbry/services/lbry_sdk/claim.dart' as lbry_sdk_claim;
 import 'package:lbry/widgets/claim_tile.dart';
+import 'package:lbry/theme.dart' as theme;
 
 class Home extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('LBRY'),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: theme.colors["background2"],
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -108,7 +109,7 @@ class _HomeState extends State<Home> {
                         child: Center(
                           child: CircularProgressIndicator(
                             // backgroundColor: Colors.black12,
-                            color: Colors.black,
+                            color: theme.colors["background1"],
                           ),
                         ),
                       ))
@@ -117,7 +118,7 @@ class _HomeState extends State<Home> {
             );
         },
       ),
+      backgroundColor: theme.colors["background1"],
     );
-    ;
   }
 }
