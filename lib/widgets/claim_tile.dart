@@ -25,7 +25,7 @@ class ClaimTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return videoWidget;
+    return videoWidget(context);
     // return Padding(
     //   padding: const EdgeInsets.all(8.0),
     //   child: Column(
@@ -181,123 +181,111 @@ class ClaimTile extends StatelessWidget {
   }
 
   // TODO Post time, pressing/tapping and other gestures.
-  Widget get videoWidget {
-    return Container(
-        height: 350,
-        margin: EdgeInsets.fromLTRB(8, 12, 8, 8),
-        decoration: BoxDecoration(
-                borderRadius : BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-                color : theme.colors["background2"],
-              ),
-        child: Stack(children: [
-          Positioned(
-            top: 0,
-            child: CachedNetworkImage(
-              imageUrl: claimProps["thumbnail_url"],
-              imageBuilder: (context, imageProvider) => Container(
-                height: 265,
-                decoration: BoxDecoration(
+  Widget videoWidget(context) {
+    print(claimProps["thumbnail_url"]);
+    print(claimProps["channel_thumbnail_url"]);
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/show_claim',
+            arguments: {"permanent_url": claimProps["permanent_url"]});
+        },
+      child: Container(
+          height: 350,
+          margin: EdgeInsets.fromLTRB(8, 12, 8, 8),
+          decoration: BoxDecoration(
                   borderRadius : BorderRadius.only(
-                    topLeft: Radius.circular(9),
-                    topRight: Radius.circular(9),
-                    bottomLeft: Radius.circular(9),
-                    bottomRight: Radius.circular(9),
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
                   ),
-                  // image: DecorationImage(image: imageProvider, fit: BoxFit.cover,),
+                  color : theme.colors["background2"],
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image(image: imageProvider,),
-                ),
-              ),
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+          child: Stack(children: [
+            Positioned(
+              top: 0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: FadeInImage.memoryNetwork(
+                height: 265,
+                alignment: Alignment.center,
+                placeholder: kTransparentImage,
+                image: claimProps["thumbnail_url"].isEmpty ? claimProps["thumbnail_url"] : "https://lbry2.vanwanet.com/speech/@EinoRauhala:b/thumbnailplaceholder:3",
+                imageErrorBuilder: (context, url, error) => Icon(Icons.error),
+              )
             )
-        ),
-          Positioned(
-            bottom: 16,
-            left: 16,
-            child: Container(
-              width: 430,
-              height: 60,
-              // color: Colors.white,
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    top: 4,
-                    child: Text(claimProps["title"],
-                      textAlign: TextAlign.left,
+          ),
+            Positioned(
+              bottom: 16,
+              left: 16,
+              child: Container(
+                width: 430,
+                height: 60,
+                // color: Colors.white,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      top: 4,
+                      child: Text(claimProps["title"],
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: theme.colors["textColor"],
+                          fontFamily: 'Roboto',
+                          fontSize: 15,
+                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+                          fontWeight: FontWeight.normal,
+                          height: 1
+                        ),
+                      )
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: FadeInImage.memoryNetwork(
+                          width: 32,
+                          height: 32,
+                          placeholder: kTransparentImage,
+                          image: claimProps["channel_thumbnail_url"].isEmpty ? claimProps["channel_thumbnail_url"] : "https://lbry2.vanwanet.com/speech/@EinoRauhala:b/thumbnailplaceholder:3",
+                          imageErrorBuilder: (context, url, error) => Icon(Icons.error),
+                        )
+                      )                    ),
+                    Positioned(
+                      bottom: 16,
+                      left: 39,
+                      child: Text(claimProps["channel_title"], textAlign: TextAlign.left,
                       style: TextStyle(
                         color: theme.colors["textColor"],
                         fontFamily: 'Roboto',
-                        fontSize: 15,
-                        letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                        fontWeight: FontWeight.normal,
-                        height: 1
-                      ),
-                    )
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: CachedNetworkImage(
-                      imageUrl: claimProps["channel_thumbnail_url"],
-                      imageBuilder: (context, imageProvider) => Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          borderRadius : BorderRadius.only(
-                            topLeft: Radius.circular(6),
-                            topRight: Radius.circular(6),
-                            bottomLeft: Radius.circular(6),
-                            bottomRight: Radius.circular(6),
-                          ),
-                          image: DecorationImage(image: imageProvider, fit: BoxFit.cover,),
-                        ),
-                      ),
-                      placeholder: (context, url) => CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    )
-                  ),
-                  Positioned(
-                    bottom: 16,
-                    left: 39,
-                    child: Text(claimProps["channel_title"], textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: theme.colors["textColor"],
-                      fontFamily: 'Roboto',
-                      fontSize: 13,
-                      letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                      fontWeight: FontWeight.normal,
-                      height: 1
-                    ),
-                    )
-                  ),
-                  Positioned(
-                    left: 39,
-                    bottom: 2,
-                    child: Text(claimProps["channel_name"],
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: theme.colors["accent"],
-                        fontFamily: 'Roboto',
-                        fontSize: 10,
+                        fontSize: 13,
                         letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                         fontWeight: FontWeight.normal,
                         height: 1
                       ),
                       )
                     ),
-              ]
-            )
-            )
-          ),
-        ]
-      )
+                    Positioned(
+                      left: 39,
+                      bottom: 2,
+                      child: Text(claimProps["channel_name"],
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: theme.colors["accent"],
+                          fontFamily: 'Roboto',
+                          fontSize: 10,
+                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+                          fontWeight: FontWeight.normal,
+                          height: 1
+                        ),
+                        )
+                      ),
+                ]
+              )
+              )
+            ),
+          ]
+        )
+      ),
     );
   } 
 }
