@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);

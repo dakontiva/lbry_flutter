@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:lbry/services/lbry_sdk/claim.dart' as lbry_sdk_claim;
 import 'package:lbry/widgets/claim_tile.dart';
 import 'package:lbry/theme.dart' as theme;
