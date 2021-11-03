@@ -182,8 +182,6 @@ class ClaimTile extends StatelessWidget {
 
   // TODO Post time, pressing/tapping and other gestures.
   Widget videoWidget(context) {
-    print(claimProps["thumbnail_url"]);
-    print(claimProps["channel_thumbnail_url"]);
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, '/show_claim',
@@ -210,7 +208,7 @@ class ClaimTile extends StatelessWidget {
                 height: 265,
                 alignment: Alignment.center,
                 placeholder: kTransparentImage,
-                image: claimProps["thumbnail_url"].isEmpty ? claimProps["thumbnail_url"] : "https://lbry2.vanwanet.com/speech/@EinoRauhala:b/thumbnailplaceholder:3",
+                image: claimProps["thumbnail_url"].isEmpty ? "https://lbry2.vanwanet.com/speech/@EinoRauhala:b/thumbnailplaceholder:3" : claimProps["thumbnail_url"],
                 imageErrorBuilder: (context, url, error) => Icon(Icons.error),
               )
             )
@@ -238,47 +236,55 @@ class ClaimTile extends StatelessWidget {
                         ),
                       )
                     ),
-                    Positioned(
-                      bottom: 0,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(6),
-                        child: FadeInImage.memoryNetwork(
-                          width: 32,
-                          height: 32,
-                          placeholder: kTransparentImage,
-                          image: claimProps["channel_thumbnail_url"].isEmpty ? claimProps["channel_thumbnail_url"] : "https://lbry2.vanwanet.com/speech/@EinoRauhala:b/thumbnailplaceholder:3",
-                          imageErrorBuilder: (context, url, error) => Icon(Icons.error),
-                        )
-                      )                    ),
-                    Positioned(
-                      bottom: 16,
-                      left: 39,
-                      child: Text(claimProps["channel_title"], textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: theme.colors["textColor"],
-                        fontFamily: 'Roboto',
-                        fontSize: 13,
-                        letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                        fontWeight: FontWeight.normal,
-                        height: 1
+                    GestureDetector(
+                      onTap: () {print("Pressed on channel data");},
+                      child: Stack(
+                        children: <Widget>[
+                          Positioned(
+                            bottom: 0,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: FadeInImage.memoryNetwork(
+                                width: 32,
+                                height: 32,
+                                placeholder: kTransparentImage,
+                                image: claimProps["channel_thumbnail_url"].isEmpty ? "https://lbry2.vanwanet.com/speech/@EinoRauhala:b/thumbnailplaceholder:3" : claimProps["channel_thumbnail_url"],
+                                imageErrorBuilder: (context, url, error) => Icon(Icons.error),
+                              )
+                            )
+                          ),
+                          Positioned(
+                            bottom: 16,
+                            left: 39,
+                            child: Text(claimProps["channel_title"], textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: theme.colors["textColor"],
+                              fontFamily: 'Roboto',
+                              fontSize: 13,
+                              letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+                              fontWeight: FontWeight.normal,
+                              height: 1
+                            ),
+                            )
+                          ),
+                          Positioned(
+                            left: 39,
+                            bottom: 2,
+                            child: Text(claimProps["channel_name"],
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: theme.colors["accent"],
+                                fontFamily: 'Roboto',
+                                fontSize: 10,
+                                letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+                                fontWeight: FontWeight.normal,
+                                height: 1
+                              ),
+                              )
+                            ),
+                        ]
                       ),
-                      )
                     ),
-                    Positioned(
-                      left: 39,
-                      bottom: 2,
-                      child: Text(claimProps["channel_name"],
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: theme.colors["accent"],
-                          fontFamily: 'Roboto',
-                          fontSize: 10,
-                          letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-                          fontWeight: FontWeight.normal,
-                          height: 1
-                        ),
-                        )
-                      ),
                 ]
               )
               )
