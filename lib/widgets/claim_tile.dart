@@ -180,7 +180,6 @@ class ClaimTile extends StatelessWidget {
     // );
   }
 
-  // TODO Post time, pressing/tapping and other gestures.
   Widget videoWidget(context) {
     return GestureDetector(
       onTap: () {
