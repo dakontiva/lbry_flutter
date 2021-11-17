@@ -48,9 +48,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('LBRY'),
+        title: Text('LAMI'),
         centerTitle: true,
-        backgroundColor: theme.colors["background2"],
+        // backgroundColor: theme.colors["background2"],
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
