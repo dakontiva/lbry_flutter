@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
 class InkWrapper extends StatelessWidget {
-  final Color splashColor;
+  final Color? splashColor;
   final Widget child;
   final VoidCallback onTap;
+  final EdgeInsets margin;
+  final BorderRadius borderRadius;
 
   InkWrapper({
-    this.splashColor = Colors.black26,
+    this.splashColor = Colors.white24,
     required this.child,
     required this.onTap,
+    this.margin = EdgeInsets.zero,
+    this.borderRadius = BorderRadius.zero,
   });
 
   @override
@@ -18,11 +22,18 @@ class InkWrapper extends StatelessWidget {
       children: <Widget>[
         child,
         Positioned.fill(
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              splashColor: splashColor,
-              onTap: onTap,
+          child: Container(
+            margin: margin,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                borderRadius: borderRadius,
+                splashColor: splashColor,
+                onTap: onTap,
+              ),
             ),
           ),
         ),
