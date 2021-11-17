@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lbry/utils/date_time.dart';
 import 'package:lbry/widgets/ink_wrapper.dart';
@@ -181,7 +180,10 @@ class ClaimTile extends StatelessWidget {
   }
 
   Widget videoWidget(context) {
-    return GestureDetector(
+    return InkWrapper(
+      splashColor: theme.colors["accent"]?.withOpacity(0.1),
+      margin: EdgeInsets.fromLTRB(8, 12, 8, 8),
+      borderRadius: BorderRadius.all(Radius.circular(15)),
       onTap: () {
         Navigator.pushNamed(context, '/show_claim',
             arguments: {"permanent_url": claimProps["permanent_url"]});
@@ -292,6 +294,6 @@ class ClaimTile extends StatelessWidget {
         )
       ),
     );
-  } 
+  }
 }
 
