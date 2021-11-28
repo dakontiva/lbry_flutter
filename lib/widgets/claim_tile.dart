@@ -85,7 +85,6 @@ class ClaimTile extends StatelessWidget {
                   child: Container(
                     width: 430,
                     height: 60,
-                    // color: Colors.white,
                     child: Stack(
                       children: <Widget>[
                         Positioned(
@@ -137,7 +136,7 @@ class ChannelData extends StatelessWidget {
                 height: 32,
                 placeholder: kTransparentImage,
                 image: claimProps["channel_thumbnail_url"].isEmpty ? "https://lbry2.vanwanet.com/speech/@EinoRauhala:b/thumbnailplaceholder:3" : claimProps["channel_thumbnail_url"],
-                imageErrorBuilder: (context, url, error) => Icon(Icons.error),
+                imageErrorBuilder: (context, url, error) => Icon(Icons.error, color: theme.colors["accent"]),
               )
             )
           ),
