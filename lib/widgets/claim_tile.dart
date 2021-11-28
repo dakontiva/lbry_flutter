@@ -26,7 +26,10 @@ class ClaimTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+    
+    // If the thumbnail url exists use it, if it doesn't use my placeholder image.
     String thumbUrl = claimProps["thumbnail_url"].isEmpty ? "https://lbry2.vanwanet.com/speech/@EinoRauhala:b/thumbnailplaceholder:3" : claimProps["thumbnail_url"];
+
     return Container(
             height: 350,
             margin: EdgeInsets.all(8),
@@ -34,12 +37,13 @@ class ClaimTile extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     color: theme.colors["background2"],
                     image: DecorationImage(
-                      image: NetworkImage(
-                        thumbUrl,),
+                      image: NetworkImage(thumbUrl),
                         fit: BoxFit.fill,
                         opacity: 0.5,
                     ),
               ),
+            // The clipBehavior needs to be specified,
+            // because without it the BackdropFilter blurs the entire screen.
             clipBehavior: Clip.hardEdge,
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -48,7 +52,6 @@ class ClaimTile extends StatelessWidget {
                   top: 0,
                   child: InkWrapper(
                     splashColor: theme.colors["accent"]?.withOpacity(0.1),
-                    // margin: EdgeInsets.fromLTRB(8, 12, 8, 8),
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     onTap: () {
                       Navigator.pushNamed(context, '/show_claim',
@@ -89,13 +92,16 @@ class ClaimTile extends StatelessWidget {
                       children: <Widget>[
                         Positioned(
                           top: 4,
+                          // This text isn't wrapping (as of yet atleast),
+                          // because the widget is made using stacks and not
+                          // flex-widgets like Flex, Column or Row.
+                          // I am unsure if there are hacks for this or is rewriting necessary.
                           child: Text(claimProps["title"],
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: theme.colors["textColor"],
                               fontFamily: 'Roboto',
                               fontSize: 15,
-                              letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                               fontWeight: FontWeight.normal,
                               height: 1
                             ),
@@ -124,6 +130,7 @@ class ChannelData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      // This is a temporary function obv
       onTap: () {print("Pressed on channel data");},
       child: Stack(
         children: <Widget>[
@@ -148,7 +155,6 @@ class ChannelData extends StatelessWidget {
               color: theme.colors["textColor"],
               fontFamily: 'Roboto',
               fontSize: 13,
-              letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
               fontWeight: FontWeight.normal,
               height: 1
             ),
@@ -163,7 +169,6 @@ class ChannelData extends StatelessWidget {
                 color: theme.colors["accent"],
                 fontFamily: 'Roboto',
                 fontSize: 10,
-                letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                 fontWeight: FontWeight.normal,
                 height: 1
               ),
