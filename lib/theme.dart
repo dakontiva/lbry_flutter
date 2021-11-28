@@ -2,8 +2,11 @@ import 'dart:ui';
 
 Map<String,Color> colors = {
   "accent" :_colorFromHex("#E95379"),
-  "background1": _colorFromHex("#1A1C23"),
-  "background2": _colorFromHex("#232530"),
+  "background1": _colorFromHex("#16161C"),
+  "background2": _colorFromHex("#1A1C23"),
+  "background3": _colorFromHex("#1C1E26"),
+  "background4": _colorFromHex("#232530"),
+  "background5": _colorFromHex("#2E303E"),
   "textColor": _colorFromHex("#FFFFFF")
   };
 
