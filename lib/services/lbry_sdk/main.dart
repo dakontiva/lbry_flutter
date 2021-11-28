@@ -17,7 +17,7 @@ Future<String> get(String permanentUrl) async {
   return json.decode(response.body)["result"]["streaming_url"];
 }
 
-Future<dynamic> resolve(List<String> urls) async {
+Future<Map> resolve(List<String> urls) async {
   final Uri apiUrl = Uri.https(lbry_consts.LBRY_API_AUTHORITY, lbry_consts.LBRY_API_PATH, {"m":"resolve"});
   http.Response response = await http.post(apiUrl,
       body: json.encode({
