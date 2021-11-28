@@ -16,3 +16,18 @@ Future<String> get(String permanentUrl) async {
   print(json.decode(response.body)["result"]["streaming_url"]);
   return json.decode(response.body)["result"]["streaming_url"];
 }
+
+Future<dynamic> resolve(List<String> urls) async {
+  final Uri apiUrl = Uri.https(lbry_consts.LBRY_API_AUTHORITY, lbry_consts.LBRY_API_PATH, {"m":"resolve"});
+  http.Response response = await http.post(apiUrl,
+      body: json.encode({
+        "method": "resolve",
+        "params": {
+            "urls": urls,
+            "include_is_my_output": true,
+            "include_purchase_receipt": true
+        },
+    }));
+  // print(json.decode(response.body)["result"]);
+  return json.decode(response.body)["result"];
+}
