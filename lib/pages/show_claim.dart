@@ -72,142 +72,143 @@ class _ShowClaimState extends State<ShowClaim> {
               future: claimData,
               builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
                 Map data = snapshot.data![claimProps["permanent_url"]];
-                return Column(
-                  children: [
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: 85,
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        color: theme.colors["background5"],
-                        child: Column(
-                          children: [
-                            Text(
-                              data ["value"]["title"],
-                              style: TextStyle(
-                                color: theme.colors["textColor"],
-                                fontSize: 18,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 8, bottom: 8),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ActionIcon(icon: Icons.favorite),
-                                  ActionIcon(icon: Icons.share),
-                                  ActionIcon(icon: Icons.repeat),
-                                  ActionIcon(icon: Icons.money),
-                                  ActionIcon(icon: Icons.download)
-                                ],
-                              ),
-                            )
-                          ],
+                return Expanded(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: 85,
                         ),
-                      )
-                    ),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: 48+16,
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        color: theme.colors["background4"],
-                        child: Row(
-                          children: [
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxHeight: 48, 
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          color: theme.colors["background5"],
+                          child: Column(
+                            children: [
+                              Text(
+                                data ["value"]["title"],
+                                style: TextStyle(
+                                  color: theme.colors["textColor"],
+                                  fontSize: 18,
+                                ),
+                                textAlign: TextAlign.left,
                               ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(7),
-                                child: FadeInImage.memoryNetwork(
-                                  placeholder: kTransparentImage,
-                                  image: data["signing_channel"]["value"]["thumbnail"]["url"]),
-                              ),
-                            ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxWidth: 250,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 8, bottom: 2, top: 2),
-                                    child: Text(
-                                      data["signing_channel"]["value"]["title"],
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: theme.colors["textColor"]
-                                      )
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 8, bottom: 2, top: 2),
-                                    child: Text(
-                                      data["signing_channel"]["name"],
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        color: theme.colors["accent"]
-                                      )
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Spacer(),
-                            ActionIcon(
-                              icon: Icons.favorite,
-                              padding: EdgeInsets.only(right: 8),
-                              size: 32,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: 50,
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        color: theme.colors["background3"],
-                        child: ExpandableTheme(
-                          data: ExpandableThemeData(
-                              iconColor: theme.colors["textColor"], 
-                              animationDuration: const Duration(milliseconds: 300),
-                              iconPadding: EdgeInsets.only(top:0,bottom: 4)
+                              Container(
+                                margin: EdgeInsets.only(top: 8, bottom: 8),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ActionIcon(icon: Icons.favorite),
+                                    ActionIcon(icon: Icons.share),
+                                    ActionIcon(icon: Icons.repeat),
+                                    ActionIcon(icon: Icons.money),
+                                    ActionIcon(icon: Icons.download)
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
-                          child: ExpandablePanel(
-                            header: Text("Description", style: TextStyle(color: theme.colors["textColor"]),),
-                            collapsed: Text(
-                              data["value"]["description"].substring(0,100),
-                              style: TextStyle(
-                                color: theme.colors["textColor"],
-                                fontSize: 11,
+                        )
+                      ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: 48+16,
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          color: theme.colors["background4"],
+                          child: Row(
+                            children: [
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxHeight: 48, 
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(7),
+                                  child: FadeInImage.memoryNetwork(
+                                    placeholder: kTransparentImage,
+                                    image: data["signing_channel"]["value"]["thumbnail"]["url"]),
+                                ),
                               ),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth: 250,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 8, bottom: 2, top: 2),
+                                      child: Text(
+                                        data["signing_channel"]["value"]["title"],
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: theme.colors["textColor"]
+                                        )
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 8, bottom: 2, top: 2),
+                                      child: Text(
+                                        data["signing_channel"]["name"],
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: theme.colors["accent"]
+                                        )
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Spacer(),
+                              ActionIcon(
+                                icon: Icons.favorite,
+                                padding: EdgeInsets.only(right: 8),
+                                size: 32,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: 50,
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          color: theme.colors["background3"],
+                          child: ExpandableTheme(
+                            data: ExpandableThemeData(
+                                iconColor: theme.colors["textColor"], 
+                                animationDuration: const Duration(milliseconds: 300),
+                                iconPadding: EdgeInsets.only(top:0,bottom: 4)
                             ),
-                            expanded:
-                              SingleChildScrollView(
-                                child: Text(
+                            child: ExpandablePanel(
+                              header: Text("Description", style: TextStyle(color: theme.colors["textColor"]),),
+                              collapsed: Text(
+                                data["value"]["description"],
+                                maxLines: 2, 
+                                style: TextStyle(
+                                  color: theme.colors["textColor"],
+                                  fontSize: 11,
+                                ),
+                              ),
+                              expanded: Text(
                                   data["value"]["description"],
                                   style: TextStyle(
                                     color: theme.colors["textColor"],
                                     fontSize: 11,
                                   ),
                                 ),
-                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
             ),
