@@ -156,6 +156,9 @@ class _HomeState extends State<Home> {
     if (link.startsWith(RegExp("https?://odysee.com"))) {
       RegExp basicRegex = new RegExp(r'https?://odysee.com/(.+)');
       basicMatch = basicRegex.firstMatch(link);
+    } else if (link.startsWith(RegExp("https?://open.lbry.com"))) {
+      RegExp basicRegex = new RegExp(r'https?://open.lbry.com/(.+)');
+      basicMatch = basicRegex.firstMatch(link);
     }
 
     if (basicMatch != null) {
