@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lbry/services/lbry_sdk/claim.dart' as lbry_sdk_claim;
 import 'package:lbry/widgets/claim_tile.dart';
 import 'package:lbry/theme.dart' as theme;
+import 'package:flutter/services.dart';
+import 'package:uni_links/uni_links.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -30,6 +34,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    initUniLinks();
     fetchData();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
@@ -42,6 +47,7 @@ class _HomeState extends State<Home> {
   void dispose() {
     super.dispose();
     _scrollController.dispose();
+    _sub.cancel();
   }
 
   @override
@@ -120,5 +126,69 @@ class _HomeState extends State<Home> {
       ),
       backgroundColor: theme.colors["background1"],
     );
+  }
+
+  late StreamSubscription _sub;
+
+  Future<void> initUniLinks() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      final initialLink = await getInitialLink();
+      if (initialLink != null) {
+        parseDeepLink(initialLink);
+      }
+    } on PlatformException {
+
+    }
+
+    _sub = linkStream.listen((String? link) {
+      if (link != null) {
+        parseDeepLink(link);
+      }
+    }, onError: (err) {
+      // Handle exception by warning the user their action did not succeed
+    });
+  }
+
+  late RegExpMatch? basicMatch;
+  void parseDeepLink(String link) {
+    print(link);
+    if (link.startsWith(RegExp("https?://odysee.com"))) {
+      RegExp basicRegex = new RegExp(r'https?://odysee.com/(.+)');
+      basicMatch = basicRegex.firstMatch(link);
+    }
+
+    if (basicMatch != null) {
+      var urlLocation = basicMatch?.group(1);
+
+      if (urlLocation != null) {
+        RegExp canonicalRegex = new RegExp(r'(@.+)/(.+)');
+        var canonicalMatch = canonicalRegex.firstMatch(urlLocation);
+        if (canonicalMatch != null) {
+          Navigator.pushNamed(context, '/show_claim',
+              arguments: {"permanent_url": "lbry://${canonicalMatch.group(1)}/${canonicalMatch.group(2)}"}
+            );
+          return;
+        }
+
+        RegExp channelRegex = new RegExp(r'(@.+)');
+        var channelMatch = channelRegex.firstMatch(urlLocation);
+        // print("Channelmatch "+channelMatch!.group(0)!);
+        if (channelMatch != null) {
+          var channel = channelMatch.group(1);
+          print("Tried to open channel "+channel!);
+          return;
+        }
+
+        RegExp wideRegex = new RegExp(r'(.+)');
+        var wideMatch = wideRegex.firstMatch(urlLocation);
+        if (wideMatch != null) {
+          print(wideMatch.group(1));
+          Navigator.pushNamed(context, '/show_claim',
+              arguments: {"permanent_url": "lbry://${wideMatch.group(1)}"}
+            );
+        }
+      }
+    }
   }
 }
