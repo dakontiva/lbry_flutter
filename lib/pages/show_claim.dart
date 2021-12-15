@@ -4,6 +4,8 @@ import 'package:lbry/services/lbry_sdk/main.dart' as lbry_sdk_main;
 import 'package:lbry/theme.dart' as theme;
 import 'package:transparent_image/transparent_image.dart';
 import 'package:expandable/expandable.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ShowClaim extends StatefulWidget {
   const ShowClaim({Key? key}) : super(key: key);
@@ -188,21 +190,14 @@ class _ShowClaimState extends State<ShowClaim> {
                             ),
                             child: ExpandablePanel(
                               header: Text("Description", style: TextStyle(color: theme.colors["textColor"]),),
-                              collapsed: Text(
-                                data["value"]["description"],
-                                maxLines: 2, 
-                                style: TextStyle(
-                                  color: theme.colors["textColor"],
-                                  fontSize: 11,
+                              collapsed: MarkdownPreset(
+                                data: data["value"]["description"]
+                                  .split(" ") // Split string to list by words
+                                  .sublist(0,12) // Take first 12 words
+                                  .join(" ") // Join it back to string
+                                  +"..." // Add "..." to indicate that truncation has happened
                                 ),
-                              ),
-                              expanded: Text(
-                                  data["value"]["description"],
-                                  style: TextStyle(
-                                    color: theme.colors["textColor"],
-                                    fontSize: 11,
-                                  ),
-                                ),
+                              expanded: MarkdownPreset(data: data["value"]["description"]),
                             ),
                           ),
                         ),
@@ -215,6 +210,40 @@ class _ShowClaimState extends State<ShowClaim> {
           ],
         ),
     );
+  }
+}
+
+class MarkdownPreset extends StatelessWidget {
+  const MarkdownPreset({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
+  final String data;
+
+  @override
+  Widget build(BuildContext context) {
+    return MarkdownBody(
+        data: data,
+        styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
+          textTheme: TextTheme(
+            bodyText1: TextStyle(fontSize: 12, color: theme.colors["textColor"],),
+            bodyText2: TextStyle(fontSize: 12, color: theme.colors["textColor"],),
+            headline1: TextStyle(color: theme.colors["textColor"],),
+            headline2: TextStyle(color: theme.colors["textColor"],),
+            headline3: TextStyle(color: theme.colors["textColor"],),
+            headline4: TextStyle(color: theme.colors["textColor"],),
+            headline5: TextStyle(color: theme.colors["textColor"],fontSize: 14,),
+            headline6: TextStyle(color: theme.colors["textColor"],fontSize: 13.5,),
+            subtitle1: TextStyle(color: theme.colors["textColor"],fontSize: 13),
+            subtitle2: TextStyle(color: theme.colors["textColor"],fontSize: 12.5,),
+            button: TextStyle(color: theme.colors["accent"],),
+          )
+        )),
+        onTapLink: (text, url, title){
+            launch(url!);
+        },
+      );
   }
 }
 
