@@ -74,6 +74,23 @@ class _ShowClaimState extends State<ShowClaim> {
               future: claimData,
               builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
                 Map data = snapshot.data![claimProps["permanent_url"]];
+
+                // Do the error and null checking
+                if (data["claim_id"] == null) {
+                  return Expanded(child: Center(child: Text("Claim does not exist"),));
+                }
+                if (data["value"]["description"] == null) {
+                  data["value"]["description"] = "No description provided...";
+                  data["value"]["truncated_description"] = "No description provided...";
+                } else {
+                  // Make truncate description if the description was provided
+                  data["value"]["truncated_description"] = data["value"]["description"].split(" ") // Split string to list by words
+                                  .take(12) // Take first 12 words
+                                  .join(" ") // Join it back to string
+                                  +"..."; // Add "..." to indicate that truncation has happened
+                }
+
+
                 return Expanded(
                   child: ListView(
                     shrinkWrap: true,
@@ -191,11 +208,7 @@ class _ShowClaimState extends State<ShowClaim> {
                             child: ExpandablePanel(
                               header: Text("Description", style: TextStyle(color: theme.colors["textColor"]),),
                               collapsed: MarkdownPreset(
-                                data: data["value"]["description"]
-                                  .split(" ") // Split string to list by words
-                                  .sublist(0,12) // Take first 12 words
-                                  .join(" ") // Join it back to string
-                                  +"..." // Add "..." to indicate that truncation has happened
+                                data: data["value"]["truncated_description"]
                                 ),
                               expanded: MarkdownPreset(data: data["value"]["description"]),
                             ),
